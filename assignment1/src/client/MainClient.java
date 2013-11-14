@@ -20,21 +20,21 @@ public class MainClient {
         PrintWriter put=null;
         try
         {
-            s=new Socket("127.0.0.1",8081);
-            get=new BufferedReader(new InputStreamReader(s.getInputStream()));
-            put=new PrintWriter(s.getOutputStream(),true);
+            s = new Socket("127.0.0.1",8081);
+            get = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            put = new PrintWriter(s.getOutputStream(),true);
         }
         catch(Exception e)
         {
             System.exit(0);
         }
-        InputStreamReader get2=new InputStreamReader(s.getInputStream());
+        InputStreamReader get2 = new InputStreamReader(s.getInputStream());
         String u,f;
         System.out.println("Enter the file name to transfer from server:");
         DataInputStream dis=new DataInputStream(System.in);
         f=dis.readLine();
         put.println(f);
-        File f1=new File("c:\\output");
+        File f1=new File("output");
         FileOutputStream  fs=new FileOutputStream(f1);
 
         BufferedInputStream d=new BufferedInputStream(s.getInputStream());
@@ -46,14 +46,10 @@ public class MainClient {
             outStream.write(buffer, 0, read);
             outStream.flush();
         }
-
-        //while((u=get.readLine())!=null)
-        // {
-        //    byte jj[]=u.getBytes();
-        //    fs.write(jj);
-        //}
-        fs.close();
         System.out.println("File received");
+
+        //TODO only close the connection if a file has not been received
+        fs.close();
         s.close();
     }
 }

@@ -14,36 +14,37 @@ import java.net.Socket;
 public class MainServer {
     public static void main(String args[])throws IOException
     {
-        ServerSocket ss=null;
+        ServerSocket serverSocket = null;
         try
         {
-            ss=new ServerSocket(8081);
+            serverSocket = new ServerSocket();
         }
         catch(IOException e)
         {
             System.out.println("couldn't listen");
             System.exit(0);
         }
-        Socket cs=null;
+        Socket clientSocket = null;
         try
         {
-            cs=ss.accept();
-            System.out.println("Connection established"+cs);
+            clientSocket = serverSocket.accept();
+            System.out.println("Connection established" + clientSocket);
         }
         catch(Exception e)
         {
             System.out.println("Accept failed");
             System.exit(1);
         }
-        PrintWriter put=new PrintWriter(cs.getOutputStream(),true);
-        BufferedReader st=new BufferedReader(new InputStreamReader(cs.getInputStream()));
-        String s=st.readLine();
-        System.out.println("The requested file is : "+s);
-        File f=new File(s);
-        if(f.exists())
+        PrintWriter put = new PrintWriter(clientSocket.getOutputStream(),true);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        String fileName = bufferedReader.readLine();
+        System.out.println("The requested file is : "+ fileName);
+        File file = new File(fileName);
+
+        if(file.exists())
         {
-            BufferedInputStream d=new BufferedInputStream(new FileInputStream(s));
-            BufferedOutputStream outStream = new BufferedOutputStream(cs.getOutputStream());
+            BufferedInputStream d=new BufferedInputStream(new FileInputStream(fileName));
+            BufferedOutputStream outStream = new BufferedOutputStream(clientSocket.getOutputStream());
             byte buffer[] = new byte[1024];
             int read;
             while((read = d.read(buffer))!=-1)
@@ -53,8 +54,11 @@ public class MainServer {
             }
             d.close();
             System.out.println("File transfered");
-            cs.close();
-            ss.close();
+            clientSocket.close();
+            serverSocket.close();
+        } else {
+        //TODO sendback error message stating file not found
         }
+
     }
 }
