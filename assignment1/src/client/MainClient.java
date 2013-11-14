@@ -2,12 +2,7 @@ package client;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.io.InputStreamReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 
 
 /**
@@ -20,7 +15,6 @@ import java.io.FileOutputStream;
 public class MainClient {
     public static void main(String srgs[])throws IOException
     {
-
         Socket s=null;
         BufferedReader get=null;
         PrintWriter put=null;
@@ -34,20 +28,33 @@ public class MainClient {
         {
             System.exit(0);
         }
+        InputStreamReader get2=new InputStreamReader(s.getInputStream());
         String u,f;
         System.out.println("Enter the file name to transfer from server:");
         DataInputStream dis=new DataInputStream(System.in);
         f=dis.readLine();
         put.println(f);
-        File f1=new File("/Users/austin.dubina/Documents/CS372/output");
+        File f1=new File("c:\\output");
         FileOutputStream  fs=new FileOutputStream(f1);
-        while((u=get.readLine())!=null)
+
+        BufferedInputStream d=new BufferedInputStream(s.getInputStream());
+        BufferedOutputStream outStream = new BufferedOutputStream(new             FileOutputStream(f1));
+        byte buffer[] = new byte[1024];
+        int read;
+        while((read = d.read(buffer))!=-1)
         {
-            byte jj[]=u.getBytes();
-            fs.write(jj);
+            outStream.write(buffer, 0, read);
+            outStream.flush();
         }
+
+        //while((u=get.readLine())!=null)
+        // {
+        //    byte jj[]=u.getBytes();
+        //    fs.write(jj);
+        //}
         fs.close();
         System.out.println("File received");
         s.close();
     }
 }
+
