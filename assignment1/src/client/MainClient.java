@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 public class MainClient {
     public static void main(String srgs[])throws IOException
     {
+
         Socket s=null;
         BufferedReader get=null;
         PrintWriter put=null;
