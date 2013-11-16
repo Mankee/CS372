@@ -3,7 +3,6 @@ package server;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import customClasses.Connection;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,13 +22,12 @@ public class MainServer {
             while(true) {
                 Socket clientSocket = listenSocket.accept();
                 Connection connection = new Connection(clientSocket);
+                System.out.println(connection.clientConnection.getInetAddress().getHostAddress());
             }
         }
         catch(IOException e) {
             System.out.println("Error intializing server: " + e.getMessage());
             System.exit(0);
         }
-
-
     }
 }

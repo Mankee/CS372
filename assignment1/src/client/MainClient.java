@@ -34,21 +34,21 @@ public class MainClient {
         DataInputStream dis = new DataInputStream(System.in);
         filename = dis.readLine();
         writeFileData.println(filename);
-        File f1 = new File("outputfile");
-        FileOutputStream  fs=new FileOutputStream(f1);
-
-        BufferedInputStream dataFromServer = new BufferedInputStream(clientSocket.getInputStream());
-        BufferedOutputStream outStream = new BufferedOutputStream(new FileOutputStream(f1));
-        byte buffer[] = new byte[1024];
-        int read;
-        while((read = dataFromServer.read(buffer))!=-1)
-        {
-            outStream.write(buffer, 0, read);
-            outStream.flush();
-        }
-        fs.close();
-        System.out.println("File received");
-        clientSocket.close();
+//        File f1 = new File("outputfile");
+//        FileOutputStream  fs=new FileOutputStream(f1);
+//
+//        BufferedInputStream dataFromServer = new BufferedInputStream(clientSocket.getInputStream());
+//        BufferedOutputStream outStream = new BufferedOutputStream(new FileOutputStream(f1));
+//        byte buffer[] = new byte[1024];
+//        int read;
+//        while((read = dataFromServer.read(buffer))!=-1)
+//        {
+//            outStream.write(buffer, 0, read);
+//            outStream.flush();
+//        }
+//        fs.close();
+//        System.out.println("File received");
+//        clientSocket.close();
     }
 }
 
