@@ -15,42 +15,40 @@ import java.io.*;
 public class MainClient {
     public static void main(String srgs[])throws IOException
     {
-        Socket s=null;
-        BufferedReader get=null;
-        PrintWriter put=null;
+        Socket clientSocket = null;
+        BufferedReader readFileData = null;
+        PrintWriter writeFileData = null;
         try
         {
-            s = new Socket("127.0.0.1",8081);
-            get = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            put = new PrintWriter(s.getOutputStream(),true);
+            clientSocket = new Socket("127.0.0.1",30021);
+            readFileData = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            writeFileData = new PrintWriter(clientSocket.getOutputStream(),true);
         }
-        catch(Exception e)
+        catch(IOException error)
         {
-            System.exit(0);
+            System.out.println("Error intializing connection: " + error.getMessage());
+            System.exit(1);
         }
-        InputStreamReader get2 = new InputStreamReader(s.getInputStream());
-        String u,f;
+        String filename;
         System.out.println("Enter the file name to transfer from server:");
-        DataInputStream dis=new DataInputStream(System.in);
-        f=dis.readLine();
-        put.println(f);
-        File f1=new File("output");
+        DataInputStream dis = new DataInputStream(System.in);
+        filename = dis.readLine();
+        writeFileData.println(filename);
+        File f1 = new File("outputfile");
         FileOutputStream  fs=new FileOutputStream(f1);
 
-        BufferedInputStream d=new BufferedInputStream(s.getInputStream());
-        BufferedOutputStream outStream = new BufferedOutputStream(new             FileOutputStream(f1));
+        BufferedInputStream dataFromServer = new BufferedInputStream(clientSocket.getInputStream());
+        BufferedOutputStream outStream = new BufferedOutputStream(new FileOutputStream(f1));
         byte buffer[] = new byte[1024];
         int read;
-        while((read = d.read(buffer))!=-1)
+        while((read = dataFromServer.read(buffer))!=-1)
         {
             outStream.write(buffer, 0, read);
             outStream.flush();
         }
-        System.out.println("File received");
-
-        //TODO only close the connection if a file has not been received
         fs.close();
-        s.close();
+        System.out.println("File received");
+        clientSocket.close();
     }
 }
 
