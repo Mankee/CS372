@@ -3,6 +3,7 @@ package client;
 import java.io.IOException;
 import java.net.Socket;
 import java.io.*;
+import java.util.Scanner;
 
 
 /**
@@ -13,37 +14,45 @@ import java.io.*;
  * To change this template use File | Settings | File Templates.
  */
 public class MainClient {
+
     public static void main(String srgs[]) {
         Socket socket;
-        BufferedReader incomingFile = null;
-        PrintWriter outgoingMessage = null;
+        BufferedReader serverInputStream = null;
+        PrintWriter serverOutputStream = null;
 
         try
         {
             socket = new Socket("127.0.0.1",30021);
-            incomingFile = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            serverInputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             DataInputStream fileInputStream = new DataInputStream(socket.getInputStream());
-            outgoingMessage = new PrintWriter(socket.getOutputStream(),true);
+            serverOutputStream = new PrintWriter(socket.getOutputStream(),true);
         }
         catch(Exception e)
         {
             System.out.println("Failed to connect to server: " + e.getMessage());
             System.exit(0);
         }
-        BufferedReader commandLineStream = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader consoleInputStream = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println("Enter your name");
         while (true) {
-            try {
-                String inputString = commandLineStream.readLine();
-                if (inputString.length() > 0) {
-                    outgoingMessage.println(inputString);
-                    while(!incomingFile.ready()){}
-                        System.out.println(incomingFile.readLine());
-                } else {
-                   System.out.println("No empty strings please");
-                }
+            System.out.println("Client: Please enter a command");
+            String consoleInput = null;
 
+            try {
+                consoleInput = consoleInputStream.readLine();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                serverOutputStream.println(consoleInput);
+                while(!serverInputStream.ready()){}
+                String message = serverInputStream.readLine();
+                while (!message.equalsIgnoreCase("eof")) {
+                    System.out.println(message);
+                    message = serverInputStream.readLine();
+                }
             }
             catch (IOException e) {
                 e.printStackTrace();

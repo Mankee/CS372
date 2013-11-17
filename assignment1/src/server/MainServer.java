@@ -16,32 +16,46 @@ public class MainServer {
     private static void startService(Socket clientSocket, BufferedReader incomingMessage, PrintWriter outgoingMessage) {
         while (clientSocket.isConnected()) {
             try {
-                String command = readBuffer(incomingMessage);
-                if (command.equalsIgnoreCase("get") && command.length() > 0 && command != null) {
-                    outgoingMessage.println("please specify the filename and path, e.g /Userfolder/Documents/filename.txt");
-                    String filename = readBuffer(incomingMessage);
-                    if (filename.length() > 0 && filename != null) {
+                String clientInputStream = readBuffer(incomingMessage);
 
+                if (isValidCommand(clientInputStream) && clientInputStream != null) {
+                        String[] clientArgs = parseInput(clientInputStream);
+                        String clientCommand = clientArgs[0];
+                        String pathname = clientArgs[1];
+                        File folder = new File(pathname).getCanonicalFile();
+
+                    if (!folder.exists()) {
+                        outgoingMessage.println("Server: Invaild pathname");
+                        outgoingMessage.println("eof");
                     }
-                } else if (command.equalsIgnoreCase("list") && command.length() > 0 && command != null) {
-                    outgoingMessage.println("please specify the path, e.g /Userfolder/Documents");
-                    String pathname = readBuffer(incomingMessage);
-                    if (pathname.length() > 0 && pathname != null) {
+                    else {
+                        if (clientCommand.equalsIgnoreCase("get") && clientCommand.length() > 0 && clientCommand != null) {
+                            outgoingMessage.println("Server: Please specify the filename and path, e.g /Userfolder/Documents/filename.txt");
+                            outgoingMessage.println("eof");
+                            String filename = readBuffer(incomingMessage);
+                            if (filename.length() > 0 && filename != null) {
 
-                        File folder = new File(pathname);
-                        File[] listOfFiles = folder.listFiles();
-
-                        for (int i = 0; i < listOfFiles.length; i++) {
-                            if (listOfFiles[i].isFile()) {
-                                outgoingMessage.println("File " + listOfFiles[i].getName());
-                            } else if (listOfFiles[i].isDirectory()) {
-                                outgoingMessage.println("Directory " + listOfFiles[i].getName());
                             }
+                        } else if (clientCommand.equalsIgnoreCase("list") && clientCommand.length() > 0 && clientCommand != null) {
+                            File[] listOfFiles = folder.listFiles();
+                            for (int i = 0; i < listOfFiles.length; i++) {
+                                if (listOfFiles[i].isFile()) {
+                                    outgoingMessage.println("File " + listOfFiles[i].getName());
+                                } else if (listOfFiles[i].isDirectory()) {
+                                    outgoingMessage.println("Directory " + listOfFiles[i].getName());
+                                }
+                            }
+                            outgoingMessage.println("eof");
+                        }
+                        else {
+                            outgoingMessage.println("Server: Invalid command");
+                            outgoingMessage.println("eof");
                         }
                     }
                 }
                 else {
-                    outgoingMessage.println("invalid command");
+                    outgoingMessage.println("Server: Invalid command");
+                    outgoingMessage.println("eof");
                 }
             }
             catch (IOException e) {
@@ -59,6 +73,20 @@ public class MainServer {
             System.out.println("error reading buffer: " + e.getMessage());
         }
         return null;
+    }
+
+    private static boolean isValidCommand (String consoleInput) {
+        if (consoleInput.trim().contains(" ")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private static String[] parseInput (String consoleInput) {
+        String[] parsedArray = consoleInput.split("\\s+");
+        return parsedArray;
     }
 
     public static void main(String args[])throws IOException
