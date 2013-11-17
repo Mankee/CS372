@@ -16,20 +16,49 @@ public class MainServer {
     private static void startService(Socket clientSocket, BufferedReader incomingMessage, PrintWriter outgoingMessage) {
         while (clientSocket.isConnected()) {
             try {
-                while(!incomingMessage.ready()){}
-                String message = incomingMessage.readLine();
-                if (message.equalsIgnoreCase("list") && message.length() > 0) {
+                String command = readBuffer(incomingMessage);
+                if (command.equalsIgnoreCase("get") && command.length() > 0 && command != null) {
                     outgoingMessage.println("please specify the filename and path, e.g /Userfolder/Documents/filename.txt");
-                }
+                    String filename = readBuffer(incomingMessage);
+                    if (filename.length() > 0 && filename != null) {
 
+                    }
+                } else if (command.equalsIgnoreCase("list") && command.length() > 0 && command != null) {
+                    outgoingMessage.println("please specify the path, e.g /Userfolder/Documents");
+                    String pathname = readBuffer(incomingMessage);
+                    if (pathname.length() > 0 && pathname != null) {
+
+                        File folder = new File(pathname);
+                        File[] listOfFiles = folder.listFiles();
+
+                        for (int i = 0; i < listOfFiles.length; i++) {
+                            if (listOfFiles[i].isFile()) {
+                                outgoingMessage.println("File " + listOfFiles[i].getName());
+                            } else if (listOfFiles[i].isDirectory()) {
+                                outgoingMessage.println("Directory " + listOfFiles[i].getName());
+                            }
+                        }
+                    }
+                }
                 else {
-                    outgoingMessage.println("invalid command, please try again");
+                    outgoingMessage.println("invalid command");
                 }
             }
             catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static String readBuffer(BufferedReader message) throws IOException {
+        try {
+            while(!message.ready());
+            return message.readLine();
+        }
+        catch (IOException e) {
+            System.out.println("error reading buffer: " + e.getMessage());
+        }
+        return null;
     }
 
     public static void main(String args[])throws IOException

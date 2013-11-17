@@ -39,7 +39,7 @@ public class MainClient {
                 if (inputString.length() > 0) {
                     outgoingMessage.println(inputString);
                     while(!incomingFile.ready()){}
-                    System.out.println(incomingFile.readLine());
+                        System.out.println(incomingFile.readLine());
                 } else {
                    System.out.println("No empty strings please");
                 }
