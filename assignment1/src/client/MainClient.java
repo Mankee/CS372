@@ -13,43 +13,59 @@ import java.io.*;
  * To change this template use File | Settings | File Templates.
  */
 public class MainClient {
-    public static void main(String srgs[])throws IOException
-    {
+    public static void main(String srgs[]) {
         Socket socket = null;
-        BufferedReader input = null;
-        PrintWriter output = null;
+        BufferedReader incomingFile = null;
+        PrintWriter outgoingMessage = null;
         try
         {
             socket = new Socket("127.0.0.1",30021);
-            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            output = new PrintWriter(socket.getOutputStream(),true);
+            incomingFile = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            DataInputStream fileInputStream = new DataInputStream(socket.getInputStream());
+            outgoingMessage = new PrintWriter(socket.getOutputStream(),true);
         }
         catch(Exception e)
         {
+            System.out.println("Failed to connect to server: " + e.getMessage());
             System.exit(0);
         }
-        String f;
-        System.out.println("Enter the file name to transfer from server:");
-        DataInputStream dis=new DataInputStream(System.in);
-        f = dis.readLine();
-        output.println(f);
+        BufferedReader commandLineStream = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println(input.readLine());
-        File f1 = new File("outputfile");
-        FileOutputStream  fs=new FileOutputStream(f1);
+        while (true) {
+            System.out.println("Enter a command: list / get");
+            try {
+                String inputString = commandLineStream.readLine();
+                if (inputString.equalsIgnoreCase("list") && inputString.length() > 0) {
 
-        BufferedInputStream d=new BufferedInputStream(socket.getInputStream());
-        BufferedOutputStream outStream = new BufferedOutputStream(new             FileOutputStream(f1));
-        byte buffer[] = new byte[1024];
-        int read;
-        while((read = d.read(buffer))!=-1)
-        {
-            outStream.write(buffer, 0, read);
-            outStream.flush();
+                    System.out.println("please specify the filename and path, e.g /Userfolder/Documents/filename.txt");
+                    outgoingMessage.println(commandLineStream.readLine());
+                    System.out.println(incomingFile.readLine());
+                }
+                else {
+                    System.out.println("invalid command, please try again");
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        fs.close();
-        System.out.println("File received");
-        socket.close();
+//        File f1 = new File("outputfile");
+//
+//        System.out.println(input.readLine());
+//        FileOutputStream  fs=new FileOutputStream(f1);
+//
+//        BufferedInputStream d=new BufferedInputStream(socket.getInputStream());
+//        BufferedOutputStream outStream = new BufferedOutputStream(new             FileOutputStream(f1));
+//        byte buffer[] = new byte[1024];
+//        int read;
+//        while((read = d.read(buffer))!=-1)
+//        {
+//            outStream.write(buffer, 0, read);
+//            outStream.flush();
+//        }
+//        fs.close();
+//        System.out.println("File received");
+//        socket.close();
     }
 }
 

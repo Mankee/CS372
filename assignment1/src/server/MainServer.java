@@ -15,26 +15,22 @@ public class MainServer {
     public static void main(String args[])throws IOException
     {
         ServerSocket serverSocket = null;
+        Socket clientSocket = null;
+
         try
         {
             serverSocket = new ServerSocket(30021);
+            clientSocket = serverSocket.accept();
+            System.out.println("Connection established" + clientSocket);
+            Connection connection = new Connection(clientSocket);
+
         }
         catch(IOException e)
         {
-            System.out.println("couldn't listen");
+            System.out.println("couldn't listen: " + e.getMessage());
             System.exit(0);
         }
-        Socket clientSocket = null;
-        try
-        {
-            clientSocket = serverSocket.accept();
-            System.out.println("Connection established" + clientSocket);
-        }
-        catch(Exception e)
-        {
-            System.out.println("Accept failed");
-            System.exit(1);
-        }
+
         PrintWriter put=new PrintWriter(clientSocket.getOutputStream(),true);
         BufferedReader st=new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         String s=st.readLine();
