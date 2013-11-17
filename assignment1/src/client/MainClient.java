@@ -14,9 +14,10 @@ import java.io.*;
  */
 public class MainClient {
     public static void main(String srgs[]) {
-        Socket socket = null;
+        Socket socket;
         BufferedReader incomingFile = null;
         PrintWriter outgoingMessage = null;
+
         try
         {
             socket = new Socket("127.0.0.1",30021);
@@ -31,19 +32,18 @@ public class MainClient {
         }
         BufferedReader commandLineStream = new BufferedReader(new InputStreamReader(System.in));
 
+        System.out.println("Enter your name");
         while (true) {
-            System.out.println("Enter a command: list / get");
             try {
                 String inputString = commandLineStream.readLine();
-                if (inputString.equalsIgnoreCase("list") && inputString.length() > 0) {
-
-                    System.out.println("please specify the filename and path, e.g /Userfolder/Documents/filename.txt");
-                    outgoingMessage.println(commandLineStream.readLine());
+                if (inputString.length() > 0) {
+                    outgoingMessage.println(inputString);
+                    while(!incomingFile.ready()){}
                     System.out.println(incomingFile.readLine());
+                } else {
+                   System.out.println("No empty strings please");
                 }
-                else {
-                    System.out.println("invalid command, please try again");
-                }
+
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -67,5 +67,7 @@ public class MainClient {
 //        System.out.println("File received");
 //        socket.close();
     }
+
+
 }
 
