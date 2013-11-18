@@ -3,13 +3,22 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Created with IntelliJ IDEA.
- * User: austin.dubina
+ * Author: Austin Dubina
  * Date: 11/14/13
- * Time: 12:18 PM
- * To change this template use File | Settings | File Templates.
+ * Readme: This is the server application that will connect and communicate with the client process. To compile this application simply type javac MainServer.java
+ * (for jdk 1.6 or higher). Run this application by typing java MainServer in the terminal. This  server application must be running first or the connection
+ * will be refused.
+ *
+ * List of available commands get <file path> | list <directory path>  | close
+ *
+ * get <file pathname>: retrieves a .txt file up to 1024 bytes in size. eg file pathname "/users/austin.dubina/test.txt"
+ * list <directory pathname>: retrieves a list of all files and sub-directories within the specified pathname. eg directory pathname "/users/austin.dubina"
+ * close: terminates both the server and client process but closes all input and output streams and performing a system exit with code "0"
+ *
+ * Note: please insure that both the server and client application are running on the same host machine. IE local hostname matches both shells. To check this simply type
+ * "hostname" into the shell.
  */
-public class MainServer {
+public class Server {
     private static void startService(Socket clientSocket, BufferedReader incomingMessage, PrintWriter outgoingMessage) {
         while (clientSocket.isConnected()) {
             try {
