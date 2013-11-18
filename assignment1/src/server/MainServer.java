@@ -3,7 +3,6 @@ package server;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,36 +25,52 @@ public class MainServer {
 
                     if (!folder.exists()) {
                         outgoingMessage.println("Server: Invaild pathname");
-                        outgoingMessage.println("eof");
+//                        outgoingMessage.println("eof");
                     }
                     else {
                         if (clientCommand.equalsIgnoreCase("get") && clientCommand.length() > 0 && clientCommand != null) {
-                            outgoingMessage.println("Server: Please specify the filename and path, e.g /Userfolder/Documents/filename.txt");
-                            outgoingMessage.println("eof");
-                            String filename = readBuffer(incomingMessage);
-                            if (filename.length() > 0 && filename != null) {
-
-                            }
-                        } else if (clientCommand.equalsIgnoreCase("list") && clientCommand.length() > 0 && clientCommand != null) {
-                            File[] listOfFiles = folder.listFiles();
-                            for (int i = 0; i < listOfFiles.length; i++) {
-                                if (listOfFiles[i].isFile()) {
-                                    outgoingMessage.println("File " + listOfFiles[i].getName());
-                                } else if (listOfFiles[i].isDirectory()) {
-                                    outgoingMessage.println("Directory " + listOfFiles[i].getName());
+                            if (folder.isFile()) {
+                                outgoingMessage.println("sendingFile");
+                                BufferedInputStream fileData = new BufferedInputStream(new FileInputStream(folder));
+                                BufferedOutputStream outStream = new BufferedOutputStream(clientSocket.getOutputStream());
+                                byte buffer[] = new byte[1024];
+                                int read;
+                                while((read = fileData.read(buffer))!=-1)
+                                {
+                                    outStream.write(buffer, 0, read);
+                                    outStream.flush();
                                 }
+    //                            fileData.close();
+    //                            outStream.close();
+    //                            outgoingMessage.println("eof");
+                            } else {
+                                outgoingMessage.println("Server: Invalid filename");
                             }
-                            outgoingMessage.println("eof");
+
+                        }
+                        else if (clientCommand.equalsIgnoreCase("list") && clientCommand.length() > 0 && clientCommand != null) {
+                            if (folder.isDirectory()) {
+                                File[] listOfFiles = folder.listFiles();
+                                outgoingMessage.println("sendingList");
+                                for (int i = 0; i < listOfFiles.length; i++) {
+                                    if (listOfFiles[i].isFile()) {
+                                        outgoingMessage.println("File " + listOfFiles[i].getName());
+                                    } else if (listOfFiles[i].isDirectory()) {
+                                        outgoingMessage.println("Directory " + listOfFiles[i].getName());
+                                    }
+                                }
+                                outgoingMessage.println("eof");
+                            } else {
+                                outgoingMessage.println("Server: Invalid Directory");
+                            }
                         }
                         else {
                             outgoingMessage.println("Server: Invalid command");
-                            outgoingMessage.println("eof");
                         }
                     }
                 }
                 else {
                     outgoingMessage.println("Server: Invalid command");
-                    outgoingMessage.println("eof");
                 }
             }
             catch (IOException e) {
@@ -106,28 +121,5 @@ public class MainServer {
             System.out.println("couldn't listen: " + e.getMessage());
             System.exit(0);
         }
-
-
-
-//        System.out.println("The requested file is : "+s);
-//        File f=new File(s);
-//        if(f.exists())
-//        {
-//            BufferedInputStream d=new BufferedInputStream(new FileInputStream(s));
-//            BufferedOutputStream outStream = new BufferedOutputStream(clientSocket.getOutputStream());
-//            byte buffer[] = new byte[1024];
-//            int read;
-//            while((read = d.read(buffer))!=-1)
-//            {
-//                outStream.write(buffer, 0, read);
-//                outStream.flush();
-//            }
-//            d.close();
-//            System.out.println("File transfered boo boo");
-//            clientSocket.close();
-//            serverSocket.close();
-//        } else {
-//            outgoingMessage.println("file does not exist");
-//        }
     }
 }

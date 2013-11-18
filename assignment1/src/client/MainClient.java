@@ -3,7 +3,6 @@ package client;
 import java.io.IOException;
 import java.net.Socket;
 import java.io.*;
-import java.util.Scanner;
 
 
 /**
@@ -16,7 +15,7 @@ import java.util.Scanner;
 public class MainClient {
 
     public static void main(String srgs[]) {
-        Socket socket;
+        Socket socket = null;
         BufferedReader serverInputStream = null;
         PrintWriter serverOutputStream = null;
 
@@ -24,8 +23,8 @@ public class MainClient {
         {
             socket = new Socket("127.0.0.1",30021);
             serverInputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            DataInputStream fileInputStream = new DataInputStream(socket.getInputStream());
             serverOutputStream = new PrintWriter(socket.getOutputStream(),true);
+
         }
         catch(Exception e)
         {
@@ -49,34 +48,35 @@ public class MainClient {
                 serverOutputStream.println(consoleInput);
                 while(!serverInputStream.ready()){}
                 String message = serverInputStream.readLine();
-                while (!message.equalsIgnoreCase("eof")) {
-                    System.out.println(message);
+                if (message.equalsIgnoreCase("sendingList")) {
+                    while(!serverInputStream.ready()){}
                     message = serverInputStream.readLine();
+                    while (!message.equalsIgnoreCase("eof")) {
+                        System.out.println(message);
+                        message = serverInputStream.readLine();
+                    }
+                }
+                else if (message.equalsIgnoreCase("sendingFile")) {
+                    File file = new File("output_file");
+                    FileOutputStream  fs = new FileOutputStream(file);
+
+                    BufferedInputStream d=new BufferedInputStream(socket.getInputStream());
+                    BufferedOutputStream outStream = new BufferedOutputStream(new FileOutputStream(file));
+                    byte buffer[] = new byte[1024];
+                    int read = d.read(buffer);
+                        outStream.write(buffer, 0, read);
+                        outStream.flush();
+
+
+                }
+                else {
+                    System.out.println(message);
                 }
             }
             catch (IOException e) {
                 e.printStackTrace();
             }
         }
-//        File f1 = new File("outputfile");
-//
-//        System.out.println(input.readLine());
-//        FileOutputStream  fs=new FileOutputStream(f1);
-//
-//        BufferedInputStream d=new BufferedInputStream(socket.getInputStream());
-//        BufferedOutputStream outStream = new BufferedOutputStream(new             FileOutputStream(f1));
-//        byte buffer[] = new byte[1024];
-//        int read;
-//        while((read = d.read(buffer))!=-1)
-//        {
-//            outStream.write(buffer, 0, read);
-//            outStream.flush();
-//        }
-//        fs.close();
-//        System.out.println("File received");
-//        socket.close();
     }
-
-
 }
 
