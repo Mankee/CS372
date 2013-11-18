@@ -23,12 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Implementation of main client">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/c:\output" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/outputfile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/MainClient.java" afterPath="$PROJECT_DIR$/src/client/MainClient.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/MainServer.java" afterPath="$PROJECT_DIR$/src/server/MainServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,7 +34,7 @@
     <file path="/Dummy.txt" changelist="cdb932d9-7e58-4d94-93a9-e7b232ef17da" time="1384735159273" ignored="false" />
     <file path="/fragment.java" changelist="cdb932d9-7e58-4d94-93a9-e7b232ef17da" time="1384738181064" ignored="false" />
     <file path="/MainServer.java" changelist="cdb932d9-7e58-4d94-93a9-e7b232ef17da" time="1384736779507" ignored="false" />
-    <file path="/MainClient.java" changelist="cdb932d9-7e58-4d94-93a9-e7b232ef17da" time="1384738154183" ignored="false" />
+    <file path="/MainClient.java" changelist="cdb932d9-7e58-4d94-93a9-e7b232ef17da" time="1384739573586" ignored="false" />
     <file path="$TEMPLATE$/sbs/jive7.0.0/application/atlassian-ide-plugin.xml" changelist="cdb932d9-7e58-4d94-93a9-e7b232ef17da" time="1384627587766" ignored="false" />
     <file path="/Connection.java" changelist="cdb932d9-7e58-4d94-93a9-e7b232ef17da" time="1384643768510" ignored="false" />
     <file path="$TEMPLATE$/sbs/jive7/application/core/src/main/resources/resources/scripts/apps/outcomes/summaryView.js" changelist="cdb932d9-7e58-4d94-93a9-e7b232ef17da" time="1384637856529" ignored="false" />
@@ -94,7 +90,7 @@
       </breakpoint>
     </breakpoint_any>
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/server/MainServer.java" line="82" class="server.MainServer" package="server">
+      <breakpoint url="file://$PROJECT_DIR$/src/server/MainServer.java" line="78" class="server.MainServer" package="server">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -109,7 +105,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/server/MainServer.java" line="54" class="server.MainServer" package="server">
+      <breakpoint url="file://$PROJECT_DIR$/src/server/MainServer.java" line="50" class="server.MainServer" package="server">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -124,7 +120,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/client/MainClient.java" line="65" class="client.MainClient" package="client">
+      <breakpoint url="file://$PROJECT_DIR$/src/client/MainClient.java" line="64" class="client.MainClient" package="client">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -164,10 +160,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainClient.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="MainClient.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/client/MainClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="0" selection-start="1875" selection-end="1875" vertical-scroll-proportion="-6.84">
+            <state line="65" column="14" selection-start="2343" selection-end="2343" vertical-scroll-proportion="0.7112069">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -175,10 +171,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainServer.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MainServer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/server/MainServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="59" selection-start="3548" selection-end="3548" vertical-scroll-proportion="0.28121722">
+            <state line="27" column="51" selection-start="1038" selection-end="1038" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -210,8 +206,8 @@
         <option value="$PROJECT_DIR$/src/server/Connection.java" />
         <option value="$PROJECT_DIR$/src/client/Client.java" />
         <option value="$PROJECT_DIR$/output_file" />
-        <option value="$PROJECT_DIR$/src/client/MainClient.java" />
         <option value="$PROJECT_DIR$/src/server/MainServer.java" />
+        <option value="$PROJECT_DIR$/src/client/MainClient.java" />
       </list>
     </option>
   </component>
@@ -555,7 +551,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31939605" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Atlassian " active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
@@ -788,19 +784,19 @@
         <state line="6" column="22" selection-start="170" selection-end="170" vertical-scroll-proportion="0.10080645" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/MainClient.java">
+    <entry file="file://$PROJECT_DIR$/src/server/MainServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="0" selection-start="1875" selection-end="1875" vertical-scroll-proportion="-6.84">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="27" column="51" selection-start="1038" selection-end="1038" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/MainServer.java">
+    <entry file="file://$PROJECT_DIR$/src/client/MainClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="59" selection-start="3548" selection-end="3548" vertical-scroll-proportion="0.28121722">
-          <folding />
+        <state line="65" column="14" selection-start="2343" selection-end="2343" vertical-scroll-proportion="0.7112069">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

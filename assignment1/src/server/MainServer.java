@@ -25,7 +25,6 @@ public class MainServer {
 
                     if (!folder.exists()) {
                         outgoingMessage.println("Server: Invaild pathname");
-//                        outgoingMessage.println("eof");
                     }
                     else {
                         if (clientCommand.equalsIgnoreCase("get") && clientCommand.length() > 0 && clientCommand != null) {
@@ -40,9 +39,6 @@ public class MainServer {
                                     outStream.write(buffer, 0, read);
                                     outStream.flush();
                                 }
-    //                            fileData.close();
-    //                            outStream.close();
-    //                            outgoingMessage.println("eof");
                             } else {
                                 outgoingMessage.println("Server: Invalid filename");
                             }

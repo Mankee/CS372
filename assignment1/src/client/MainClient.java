@@ -58,16 +58,13 @@ public class MainClient {
                 }
                 else if (message.equalsIgnoreCase("sendingFile")) {
                     File file = new File("output_file");
-                    FileOutputStream  fs = new FileOutputStream(file);
 
-                    BufferedInputStream d=new BufferedInputStream(socket.getInputStream());
+                    BufferedInputStream fileInputStream = new BufferedInputStream(socket.getInputStream());
                     BufferedOutputStream outStream = new BufferedOutputStream(new FileOutputStream(file));
                     byte buffer[] = new byte[1024];
-                    int read = d.read(buffer);
+                    int read = fileInputStream.read(buffer);
                         outStream.write(buffer, 0, read);
                         outStream.flush();
-
-
                 }
                 else {
                     System.out.println(message);
