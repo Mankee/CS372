@@ -46,6 +46,7 @@ public class Server {
                                     outStream.write(buffer, 0, read);
                                     outStream.flush();
                                 }
+                                fileData.close();
                             } else {
                                 outgoingMessage.println("Server: Invalid filename");
                             }

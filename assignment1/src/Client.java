@@ -72,6 +72,7 @@ public class Client {
                     int read = fileInputStream.read(buffer);
                         outStream.write(buffer, 0, read);
                         outStream.flush();
+                        outStream.close();
                 }
                 else if (message.equalsIgnoreCase("shuttingDown")) {
                     System.out.println("Client: Server is shutting down, So am I... Goodbye!");
