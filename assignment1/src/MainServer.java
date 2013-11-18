@@ -1,5 +1,3 @@
-package server;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -60,10 +58,18 @@ public class MainServer {
                                 outgoingMessage.println("Server: Invalid Directory");
                             }
                         }
+
                         else {
                             outgoingMessage.println("Server: Invalid command");
                         }
                     }
+                }
+                else if (clientInputStream.equalsIgnoreCase("close")) {
+                    outgoingMessage.println("shuttingDown");
+                    incomingMessage.close();
+                    outgoingMessage.close();
+                    clientSocket.close();
+                    System.exit(0);
                 }
                 else {
                     outgoingMessage.println("Server: Invalid command");
@@ -107,6 +113,7 @@ public class MainServer {
         try
         {
             serverSocket = new ServerSocket(30021);
+            System.out.println("Server: Socket initialized, now listening on: " + serverSocket.toString());
             clientSocket = serverSocket.accept();
             PrintWriter outgoingStream = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader incomingStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

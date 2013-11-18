@@ -1,5 +1,3 @@
-package client;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.io.*;
@@ -21,7 +19,7 @@ public class MainClient {
 
         try
         {
-            socket = new Socket("127.0.0.1",30021);
+            socket = new Socket("localhost",30021);
             serverInputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             serverOutputStream = new PrintWriter(socket.getOutputStream(),true);
 
@@ -65,6 +63,13 @@ public class MainClient {
                     int read = fileInputStream.read(buffer);
                         outStream.write(buffer, 0, read);
                         outStream.flush();
+                }
+                else if (message.equalsIgnoreCase("shuttingDown")) {
+                    System.out.println("Client: Server is shutting down, So am I... Goodbye!");
+                    serverInputStream.close();
+                    serverInputStream.close();
+                    socket.close();
+                    System.exit(0);
                 }
                 else {
                     System.out.println(message);
